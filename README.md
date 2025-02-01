@@ -3,7 +3,12 @@
 ### SquadUp - An AI Hangout Planner
 
 Group Members:
+
 Krish Sonvane 
+
 Erik Schaufele
+
 Clifton Tan 
+
 Nevin Seikhon
+
