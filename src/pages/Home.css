@@ -1,0 +1,59 @@
+.home {
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center;
+  height: 100vh;
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff4ec;
+}
+
+.home-content {
+  max-width: 40%; /* Reduce width to bring text closer to the middle */
+  text-align: left;
+  margin-right: 2rem; /* Add space between text and image */
+}
+
+.home h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600; /* Semi-bold */
+  color: #333;
+}
+
+.home p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-left: 1.5rem; /* Indent the paragraph */
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.plan-button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 500; /* Medium */
+  color: white;
+  background-color: #ff6f61;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 1.5rem; /* Align button with the header */
+}
+
+.plan-button:hover {
+  background-color: #e65a50; /* Darker shade on hover */
+}
+
+.home-image {
+  max-width: 40%; /* Reduce width to bring image closer to the middle */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-image img {
+  width: 100%;
+  max-width: 350px; /* Slightly reduce image size */
+  height: auto;
+}

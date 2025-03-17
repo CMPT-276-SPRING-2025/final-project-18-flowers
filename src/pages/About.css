@@ -1,0 +1,55 @@
+.about {
+  padding: 2rem;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.about h1,
+.about h2 {
+  margin-bottom: 1rem;
+  font-weight: 600; /* Semi-bold */
+}
+
+.about p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+}
+
+.team-images {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  text-align: center;
+  margin: 1rem;
+}
+
+.team-member img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.team-member p {
+  font-weight: 500; /* Medium */
+  margin: 0.5rem 0;
+}
+
+.team-member a {
+  text-decoration: none;
+  color: #ff6f61;
+  font-weight: 500; /* Medium */
+  transition: color 0.3s ease;
+  margin: 0 0.5rem;
+}
+
+.team-member a:hover {
+  color: #333;
+}

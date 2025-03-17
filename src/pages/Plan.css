@@ -1,0 +1,43 @@
+.plan {
+  padding: 2rem;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff4ec;
+}
+
+.search-bar {
+  width: 80%;
+  padding: 0.8rem;
+  margin-bottom: 2rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400; /* Regular */
+  font-size: 1rem;
+}
+
+.top-places {
+  margin-top: 2rem;
+}
+
+.place-cards {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.place-card {
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  width: 150px;
+  font-weight: 500; /* Medium */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 1rem;
+}
+
+.place-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
