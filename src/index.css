@@ -19,7 +19,7 @@ body {
   padding: 0;
   background-color: #fff4ec;
   color: #000000;
-  padding-top: 60px; /* Add padding for the fixed navbar */
+  padding-top: 50px; /* Reduced from 60px to 50px */
   overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
