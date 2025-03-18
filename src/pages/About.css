@@ -1,28 +1,29 @@
 .about {
   padding: 2rem;
-  text-align: center;
-  font-family: "Poppins", sans-serif;
+  text-align: left; /* Left-align text */
+  font-family: 'Poppins', sans-serif;
+  max-width: 800px; /* Limit width for better readability */
+  margin: 0 auto; /* Center the container */
 }
 
 .about h1,
 .about h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem; /* Add space below headers */
   font-weight: 600; /* Semi-bold */
+  color: #333;
 }
 
 .about p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
-  max-width: 800px;
-  margin: 0 auto 2rem auto;
+  font-size: 1.2rem; /* Larger paragraph text */
+  color: #555;
+  margin-bottom: 2rem; /* Add space below paragraphs */
+  line-height: 1.6; /* Improve readability */
 }
 
 .team-images {
   display: flex;
-  justify-content: space-around;
+  justify-content: center; /* Center the team member */
   margin-top: 2rem;
-  flex-wrap: wrap;
 }
 
 .team-member {
@@ -30,26 +31,37 @@
   margin: 1rem;
 }
 
+.image-container {
+  width: 300px; /* Increased container size */
+  height: 300px; /* Increased container size */
+  border-radius: 50%; /* Make the container circular */
+  overflow: hidden; /* Hide overflow to create a circular mask */
+  position: relative; /* Allow positioning of the image */
+  margin-bottom: 1rem; /* Add space below the image */
+}
+
 .team-member img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
+  width: 100%; /* Ensure the image fills the container */
+  height: 100%; /* Ensure the image fills the container */
+  object-fit: cover; /* Prevent stretching, crop if necessary */
+  object-position: center; /* Center the image within the container */
 }
 
 .team-member p {
   font-weight: 500; /* Medium */
   margin: 0.5rem 0;
+  font-size: 1.2rem; /* Larger text for names */
 }
 
 .team-member a {
   text-decoration: none;
-  color: #ff6f61;
+  color: #ff6f61; /* Highlight color for links */
   font-weight: 500; /* Medium */
   transition: color 0.3s ease;
   margin: 0 0.5rem;
+  font-size: 1.1rem; /* Larger text for links */
 }
 
 .team-member a:hover {
-  color: #333;
+  color: #333; /* Darker color on hover */
 }
