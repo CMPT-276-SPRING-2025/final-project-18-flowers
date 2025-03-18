@@ -56,11 +56,11 @@ const About = () => {
         </div>
         <div className="team-member">
           <div className="image-container">
-            <img src="" alt="Erik" />
+            <img src="src/images/Erik.png" alt="Erik" />
           </div>
           <p>Erik</p>
-          <a href="https://github.com/Cliftan">GitHub</a>
-          <a href="https://linkedin.com/in/Cliftan">LinkedIn</a>
+          <a href="https://github.com/eriks-23">GitHub</a>
+          <a href="https://www.linkedin.com/in/erik-schaufele-23b0b1311/">LinkedIn</a>
         </div>
       </div>
     </div>
