@@ -1,23 +1,60 @@
 .plan {
   padding: 2rem;
-  text-align: center;
+  text-align: left; /* Left-align all text */
   font-family: "Poppins", sans-serif;
-  background-color: #fff4ec;
+  max-width: 1200px; /* Increase max-width for a fuller look */
+  margin: 0 auto; /* Center the container horizontally */
+  min-height: 100vh; /* Ensure the page takes up the full viewport height */
+  background-color: #fff4ec; /* Match the background color */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
+}
+
+.plan h1 {
+  font-size: 3rem; /* Larger header */
+  margin-bottom: 1.5rem; /* Add space below the header */
+  font-weight: 600; /* Semi-bold */
+  color: #333;
 }
 
 .search-bar {
-  width: 80%;
-  padding: 0.8rem;
+  width: 100%;
+  padding: 1rem;
   margin-bottom: 2rem;
   border: 2px solid #ccc;
   border-radius: 8px;
   font-family: "Poppins", sans-serif;
   font-weight: 400; /* Regular */
-  font-size: 1rem;
+  font-size: 1.2rem; /* Larger font size */
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #ff6f61; /* Highlight color on focus */
+}
+
+.response-box {
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-size: 1.2rem; /* Larger font size */
+  line-height: 1.6; /* Better readability */
+  color: #555;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .top-places {
   margin-top: 2rem;
+  flex-grow: 1; /* Allow this section to grow and fill remaining space */
+}
+
+.top-places h2 {
+  font-size: 2.5rem; /* Larger subheader */
+  margin-bottom: 1.5rem; /* Add space below the subheader */
+  font-weight: 600; /* Semi-bold */
+  color: #333;
 }
 
 .place-cards {
@@ -28,13 +65,14 @@
 }
 
 .place-card {
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: #f0f0f0;
   border-radius: 8px;
   width: 150px;
   font-weight: 500; /* Medium */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin: 1rem;
+  text-align: center;
 }
 
 .place-card:hover {
