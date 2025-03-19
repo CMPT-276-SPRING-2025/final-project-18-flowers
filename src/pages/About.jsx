@@ -1,8 +1,5 @@
 import "./About.css";
 
-// Import Clifton's image
-import CliftonImage from "../images/Clifton.jpg";
-
 const About = () => {
   return (
     <div className="about">
@@ -32,7 +29,7 @@ const About = () => {
       <div className="team-images">
         <div className="team-member">
           <div className="image-container">
-            <img src={CliftonImage} alt="Clifton Tan" />
+            <img src="src/images/Clifton.jpg" alt="Clifton Tan" />
           </div>
           <p>Clifton Tan</p>
           <a href="https://github.com/Cliftan">GitHub</a>
@@ -40,9 +37,17 @@ const About = () => {
         </div>
         <div className="team-member">
           <div className="image-container">
+            <img src="src/images/Erik.png" alt="Erik" />
+          </div>
+          <p>Erik Schaufele</p>
+          <a href="https://github.com/eriks-23">GitHub</a>
+          <a href="https://www.linkedin.com/in/erik-schaufele-23b0b1311/">LinkedIn</a>
+        </div>
+        <div className="team-member">
+          <div className="image-container">
             <img src="" alt="Krish" />
           </div>
-          <p>Krish</p>
+          <p>Krish Sonvane</p>
           <a href="https://github.com/Cliftan">GitHub</a>
           <a href="https://linkedin.com/in/Cliftan">LinkedIn</a>
         </div>
@@ -50,17 +55,9 @@ const About = () => {
           <div className="image-container">
             <img src="" alt="Nevin" />
           </div>
-          <p>Nevin</p>
+          <p>Nevin Seikhon</p>
           <a href="https://github.com/Cliftan">GitHub</a>
           <a href="https://linkedin.com/in/Cliftan">LinkedIn</a>
-        </div>
-        <div className="team-member">
-          <div className="image-container">
-            <img src="src/images/Erik.png" alt="Erik" />
-          </div>
-          <p>Erik</p>
-          <a href="https://github.com/eriks-23">GitHub</a>
-          <a href="https://www.linkedin.com/in/erik-schaufele-23b0b1311/">LinkedIn</a>
         </div>
       </div>
     </div>
