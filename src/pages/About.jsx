@@ -43,8 +43,8 @@ const About = () => {
             <img src="" alt="Krish" />
           </div>
           <p>Krish</p>
-          <a href="https://github.com/Cliftan">GitHub</a>
-          <a href="https://linkedin.com/in/Cliftan">LinkedIn</a>
+          <a href="https://github.com/krishsonvane14">GitHub</a>
+          <a href="https://www.linkedin.com/in/krish-sonvane-89109b294/">LinkedIn</a>
         </div>
         <div className="team-member">
           <div className="image-container">
