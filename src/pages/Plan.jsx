@@ -1,21 +1,22 @@
 import { useState } from "react";
+import { generateContent } from "../components/Model"; // adjust the path if necessary
 import "./Plan.css";
 
 const Plan = () => {
-  const [input, setInput] = useState(""); // State to store user input
-  const [response, setResponse] = useState(""); // State to store AI response
+  const [input, setInput] = useState("");    // State for user input
+  const [response, setResponse] = useState(""); // State for AI response
 
   const handleInputChange = (e) => {
-    setInput(e.target.value); // Update input state as the user types
+    setInput(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form submission
-    // Simulate an AI response (replace this with API call later)
-    setResponse(`Here are some suggestions based on "${input}": 
-    1. Visit a local park
-    2. Check out a comedy show
-    3. Try a new cafe`);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Build a prompt for the AI (you can adjust this string as needed)
+    const prompt = `Give suggestions for a hangout based on: "${input}"`;
+    // Await the generated content from the AI
+    const aiResponse = await generateContent(prompt);
+    setResponse(aiResponse);
     setInput(""); // Clear the input field
   };
 
@@ -32,7 +33,7 @@ const Plan = () => {
         />
       </form>
       <div className="response-box">
-        {response && <p>{response}</p>} {/* Display AI response */}
+        {response && <p>{response}</p>}
       </div>
       <div className="top-places">
         <h2>Top Places to Hangout</h2>
