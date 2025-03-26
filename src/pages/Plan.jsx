@@ -1,6 +1,28 @@
 import { useState } from "react";
-import { generateContent } from "../components/Model"; // adjust the path if necessary
+import { generateContent } from "../components/Model";
 import "./Plan.css";
+
+// Helper function to convert basic markdown to HTML
+const convertMarkdown = (text) => {
+  // Convert bold markers: **text** -> <strong>text</strong>
+  let html = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  
+  // Split text into lines
+  const lines = html.split("\n").map((line) => line.trim());
+  
+  // If every line starts with a bullet marker (*), treat it as a list
+  if (lines.every((line) => line.startsWith("*"))) {
+    const listItems = lines
+      .map((line) => `<li>${line.substring(1).trim()}</li>`)
+      .join("");
+    html = `<ul>${listItems}</ul>`;
+  } else {
+    // Otherwise, replace newlines with <br>
+    html = html.replace(/\n/g, "<br>");
+  }
+  
+  return html;
+};
 
 const Plan = () => {
   const [input, setInput] = useState("");    // State for user input
@@ -12,12 +34,10 @@ const Plan = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Build a prompt for the AI (you can adjust this string as needed)
     const prompt = `Give suggestions for a hangout based on: "${input}"`;
-    // Await the generated content from the AI
     const aiResponse = await generateContent(prompt);
     setResponse(aiResponse);
-    setInput(""); // Clear the input field
+    setInput(""); // Clear input
   };
 
   return (
@@ -33,7 +53,10 @@ const Plan = () => {
         />
       </form>
       <div className="response-box">
-        {response && <p>{response}</p>}
+        {response && (
+          // Render the processed HTML. (Caution: only do this if you're confident in the safety of the content.)
+          <div dangerouslySetInnerHTML={{ __html: convertMarkdown(response) }} />
+        )}
       </div>
       <div className="top-places">
         <h2>Top Places to Hangout</h2>
