@@ -22,7 +22,7 @@ const About = () => {
       <h2>Who Are We?</h2>
       <p>
         We are a team of passionate developers and designers who understand the challenges of planning group activities. 
-        Our team includes Krish Sonvane, Erik Schaufele, Clifton Tan, and Nevin Seikhon. Together, we’ve created 
+        Our team includes Krish, Erik, Clifton, and Nev. Together, we’ve created 
         SquadUp to help people like you spend less time planning and more time enjoying life with friends.
       </p>
 
