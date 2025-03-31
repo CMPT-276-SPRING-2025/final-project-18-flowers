@@ -37,7 +37,13 @@ const Plan = () => {
     const prompt = `Give suggestions for a hangout based on: "${input}"`;
     const aiResponse = await generateContent(prompt);
     setResponse(aiResponse);
-    setInput(""); // Clear input
+    setInput(""); // Clear input after submission
+  };
+
+  // Define a function to clear both input and response states
+  const handleClear = () => {
+    setInput("");
+    setResponse("");
   };
 
   return (
@@ -54,10 +60,16 @@ const Plan = () => {
       </form>
       <div className="response-box">
         {response && (
-          // Render the processed HTML. (Caution: only do this if you're confident in the safety of the content.)
+          // Render the processed HTML (caution: use dangerouslySetInnerHTML only if the content is safe)
           <div dangerouslySetInnerHTML={{ __html: convertMarkdown(response) }} />
         )}
       </div>
+      {/* Conditionally render the clear button only if there's input or a response */}
+      {(input.trim() !== "" || response.trim() !== "") && (
+        <button onClick={handleClear} className="clear-btn">
+          Clear
+        </button>
+      )}
       <div className="top-places">
         <h2>Top Places to Hangout</h2>
         <div className="place-cards">
