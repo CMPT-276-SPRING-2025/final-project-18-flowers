@@ -21,43 +21,15 @@ const About = () => {
 
       <h2>Who Are We?</h2>
       <p>
-        We are a team of passionate developers and designers who understand the challenges of planning group activities. 
-        Our team includes Krish, Erik, Clifton, and Nev. Together, we’ve created 
+        We are a team of passionate student developers and designers who understand the challenges of planning group activities. 
+        We’ve created 
         SquadUp to help people like you spend less time planning and more time enjoying life with friends.
       </p>
 
       <div className="team-images">
         <div className="team-member">
           <div className="image-container">
-            <img src="src/images/Clifton.jpg" alt="Clifton Tan" />
           </div>
-          <p>Clifton Tan</p>
-          <a href="https://github.com/Cliftan">GitHub</a>
-          <a href="https://linkedin.com/in/Cliftan">LinkedIn</a>
-        </div>
-        <div className="team-member">
-          <div className="image-container">
-            <img src="src/images/Erik.png" alt="Erik" />
-          </div>
-          <p>Erik Schaufele</p>
-          <a href="https://github.com/eriks-23">GitHub</a>
-          <a href="https://www.linkedin.com/in/erik-schaufele-23b0b1311/">LinkedIn</a>
-        </div>
-        <div className="team-member">
-          <div className="image-container">
-            <img src="" alt="Krish" />
-          </div>
-          <p>Krish</p>
-          <a href="https://github.com/krishsonvane14">GitHub</a>
-          <a href="https://www.linkedin.com/in/krish-sonvane-89109b294/">LinkedIn</a>
-        </div>
-        <div className="team-member">
-          <div className="image-container">
-            <img src="" alt="Nevin" />
-          </div>
-          <p>Nevin Seikhon</p>
-          <a href="https://github.com/Cliftan">GitHub</a>
-          <a href="https://linkedin.com/in/Cliftan">LinkedIn</a>
         </div>
       </div>
     </div>
