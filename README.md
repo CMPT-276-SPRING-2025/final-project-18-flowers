@@ -5,6 +5,10 @@
 ### Description
 This project aims to help any group decide on something to do when they have a hangout. This project is mainly directed to help target teens who struggle to coordinate plans with friends. 
 
+### Link:
+
+[Squad Up](https://cmpt-276-spring-2025.github.io/final-project-18-flowers/)
+
 ## Local Deployment:
 
 To set up and run this app locally follow these instructions:
