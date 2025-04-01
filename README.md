@@ -9,7 +9,7 @@ This project aims to help any group decide on something to do when they have a h
 
 To set up and run this app locally follow these instructions:
 
-### Prerequisits:
+### Prerequisites:
 
 Before starting first make sure that you have following:
 
@@ -45,7 +45,7 @@ npm install
 
 Navigate inside of the folder to the file called ".env"
 
-Open the file with the text editor of your choice and replace "your_api_key" with the value for your api key you got from the prerequisits section:
+Open the file with the text editor of your choice and replace "your_api_key" with the value for your api key you got from the prerequisites section:
 
 Before:
 ```sh
