@@ -10,17 +10,17 @@ const HelpPopup = ({ isOpen, onClose }) => {
         <h2>How to Use SquadUp</h2>
         
         <div className="help-step">
-          <img src="/images/search-step.png" alt="Search step" className="help-image" />
-          <p>1. Enter your search query in the search bar to find activities or events</p>
+          <img src="/final-project-18-flowers/search.png" alt="Search interface" className="help-image" />
+          <p>1. Use the search bar to find activities or events you're interested in</p>
         </div>
 
         <div className="help-step">
-          <img src="/images/ai-response.png" alt="AI response step" className="help-image" />
+          <img src="/final-project-18-flowers/images/ai-response.png" alt="AI response step" className="help-image" />
           <p>2. Get personalized suggestions from our AI based on your search</p>
         </div>
 
         <div className="help-step">
-          <img src="/images/categories.png" alt="Categories step" className="help-image" />
+          <img src="/final-project-18-flowers/images/categories.png" alt="Categories step" className="help-image" />
           <p>3. Browse through different categories like events, spots, cafes, and parks</p>
         </div>
 

@@ -15,7 +15,7 @@
   background-color: white;
   padding: 2rem;
   border-radius: 10px;
-  max-width: 600px;
+  max-width: 800px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
@@ -26,10 +26,11 @@
   text-align: center;
   margin-bottom: 2rem;
   color: #333;
+  font-size: 2rem;
 }
 
 .help-step {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,16 +39,20 @@
 
 .help-image {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   height: auto;
   margin-bottom: 1rem;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  object-fit: contain;
 }
 
 .help-step p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #555;
   line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .help-buttons {
@@ -57,27 +62,24 @@
   margin-top: 2rem;
 }
 
-.close-btn, .dont-remind-btn {
+.close-btn {
   padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: background-color 0.3s;
+  background-color: #ff6f61;
+  color: white;
 }
 
-.close-btn {
-  background-color: #4CAF50;
-  color: white;
+.close-btn:hover {
+  background-color: #ff5a4d;
 }
 
 .dont-remind-btn {
   background-color: #f44336;
   color: white;
-}
-
-.close-btn:hover {
-  background-color: #45a049;
 }
 
 .dont-remind-btn:hover {
