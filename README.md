@@ -86,6 +86,19 @@ Please leave feedback for our site using the following form:
 
 ![form QR code](/misc/FeedbackQRCode.png)
 
+## Tasks For Testers:
+
+### 1. Navigate the Site
+Ensure that you can navigate the site.
+
+### 2. Generate Plan
+Navigate to plan page and add an input to see what you get for your plan.
+
+### 3. Clear Output
+Select the clear button to clear the previous output.
+
+### 4. Try and Break The AI
+Input whatever you want and see how the AI responds try and find a way to get an unexpected or unaccounted for output.
 
 
 
