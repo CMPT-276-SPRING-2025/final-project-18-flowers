@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { generateContent } from "../components/Model";
+import HelpPopup from "../components/HelpPopup";
 import "./Plan.css";
 
 // Helper function to convert basic markdown to HTML
@@ -27,6 +28,20 @@ const convertMarkdown = (text) => {
 const Plan = () => {
   const [input, setInput] = useState("");    // State for user input
   const [response, setResponse] = useState(""); // State for AI response
+  const [showHelp, setShowHelp] = useState(false);
+
+  useEffect(() => {
+    // Show popup every time the component mounts
+    setShowHelp(true);
+  }, []);
+
+  const handleCloseHelp = () => {
+    setShowHelp(false);
+  };
+
+  const handleShowHelp = () => {
+    setShowHelp(true);
+  };
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -47,39 +62,46 @@ const Plan = () => {
   };
 
   return (
-    <div className="plan">
-      <h1>Plan Your Hangout</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search for events or activities"
-          className="search-bar"
-          value={input}
-          onChange={handleInputChange}
-        />
-      </form>
-      <div className="response-box">
-        {response && (
-          // Render the processed HTML (caution: use dangerouslySetInnerHTML only if the content is safe)
-          <div dangerouslySetInnerHTML={{ __html: convertMarkdown(response) }} />
-        )}
+    <>
+      <div className="help-icon" onClick={handleShowHelp}>
+        <i className="fas fa-question-circle"></i>
       </div>
-      {/* Conditionally render the clear button only if there's input or a response */}
-      {(input.trim() !== "" || response.trim() !== "") && (
-        <button onClick={handleClear} className="clear-btn">
-          Clear
-        </button>
-      )}
-      <div className="top-places">
-        <h2>Top Places to Hangout</h2>
-        <div className="place-cards">
-          <div className="place-card">Eventbrite</div>
-          <div className="place-card">Spots</div>
-          <div className="place-card">Cafes</div>
-          <div className="place-card">Parks</div>
+      <div className="plan">
+        <h1>Plan Your Hangout</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Search for events or activities"
+            className="search-bar"
+            value={input}
+            onChange={handleInputChange}
+          />
+        </form>
+        <div className="response-box">
+          {response && (
+            <div dangerouslySetInnerHTML={{ __html: convertMarkdown(response) }} />
+          )}
+        </div>
+        {(input.trim() !== "" || response.trim() !== "") && (
+          <button onClick={handleClear} className="clear-btn">
+            Clear
+          </button>
+        )}
+        <div className="top-places">
+          <h2>Top Places to Hangout</h2>
+          <div className="place-cards">
+            <div className="place-card">Eventbrite</div>
+            <div className="place-card">Spots</div>
+            <div className="place-card">Cafes</div>
+            <div className="place-card">Parks</div>
+          </div>
         </div>
       </div>
-    </div>
+      <HelpPopup 
+        isOpen={showHelp}
+        onClose={handleCloseHelp}
+      />
+    </>
   );
 };
 
