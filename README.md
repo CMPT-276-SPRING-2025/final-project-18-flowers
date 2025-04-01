@@ -56,7 +56,7 @@ After:
 VITE_GEMINI_API_KEY=AIzaSY.....
 ```
 
-###Run Locally
+### Run Locally:
 
 Run the following command in your terminal to start the a local server for the project to run:
 ```sh
