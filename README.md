@@ -79,6 +79,12 @@ Copy and paste the link generated into your browser to see the project run!
 http://localhost:3000/final-project-18-flowers/
 ```
 
+## Feedback
+
+Please leave feedback for our site using the following form:
+[feedback form](https://forms.office.com/r/TTMsHjuJSt?origin=lprLink)
+
+![form QR code](/misc/FeedbackQRCode.png)
 
 
 
