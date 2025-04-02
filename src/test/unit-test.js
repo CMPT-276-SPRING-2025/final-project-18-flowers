@@ -1,5 +1,5 @@
-require('dotenv').config();
 import { processResponse } from '../components/Model.js';
+
 
 // Unit Test 1: Testing processResponse function
 function testProcessResponse() {

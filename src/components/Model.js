@@ -1,13 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize the Gemini client using the API key from Vite's environment variables
-const API_KEY = process.env.VITE_GEMINI_API_KEY;
-
-if (!API_KEY) {
-  throw new Error('VITE_GEMINI_API_KEY is missing!');
-}
-
-const genAI = new GoogleGenerativeAI(API_KEY);
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 // Helper: Extract bullet points or return a concise snippet if bullets aren't detected.
