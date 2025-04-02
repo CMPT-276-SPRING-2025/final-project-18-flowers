@@ -1,5 +1,5 @@
 
-import { processResponse } from '../components/Model.jsx';
+import { processResponse } from '../components/Model.js';
 
 // Unit Test 1: Testing processResponse function
 function testProcessResponse() {

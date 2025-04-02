@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { generateContent } from "../components/Model";
+import { generateContent } from "../components/Model.js";
 import HelpPopup from "../components/HelpPopup";
 import "./Plan.css";
 
