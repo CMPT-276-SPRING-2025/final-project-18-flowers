@@ -54,7 +54,7 @@ jobs:
       - name: Install dependencies
         run: npm install 
 
-     - name: Install Babel presets
+      - name: Install Babel presets
         run: npm install --save-dev @babel/preset-env @babel/preset-react
 
       - name: Run unit tests
