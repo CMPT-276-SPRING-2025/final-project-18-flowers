@@ -1,4 +1,4 @@
-import { processResponse } from '../components/Model';
+import { processResponse } from '../components/Model.jsx';
 
 // Unit Test 1: Testing processResponse function
 function testProcessResponse() {
