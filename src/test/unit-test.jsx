@@ -1,7 +1,3 @@
-require('@babel/register')({
-  presets: ['@babel/preset-env', '@babel/preset-react'], // Add React preset
-  extensions: ['.js', '.jsx'] // Ensure .jsx files are processed
-});
 
 import { processResponse } from '../components/Model.jsx';
 
