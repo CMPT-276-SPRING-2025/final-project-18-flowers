@@ -50,7 +50,10 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name: Install dependencies
+        run: npm install 
+
       - name: Check if babel-node is installed
         run: ls -l node_modules/.bin/ 
 
