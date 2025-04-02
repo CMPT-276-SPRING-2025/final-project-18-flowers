@@ -54,8 +54,8 @@ jobs:
       - name: Install dependencies
         run: npm install 
 
-      - name: Check if babel-node is installed
-        run: ls -l node_modules/.bin/ 
+     - name: Install Babel presets
+        run: npm install --save-dev @babel/preset-env @babel/preset-react
 
       - name: Run unit tests
         run: npm test  
