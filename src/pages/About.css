@@ -4,6 +4,8 @@
   font-family: 'Poppins', sans-serif;
   max-width: 800px; /* Limit width for better readability */
   margin: 0 auto; /* Center the container */
+  background-color: #fff4ec;
+  min-height: 100vh;
 }
 
 .about h1,
@@ -64,4 +66,77 @@
 
 .team-member a:hover {
   color: #333; /* Darker color on hover */
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 1.5rem;
+  }
+
+  .about h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about h2 {
+    font-size: 1.8rem;
+    margin: 1.5rem 0 1rem;
+  }
+
+  .about p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+
+  .team-images {
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .team-member {
+    width: 180px;
+  }
+
+  .image-container {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about {
+    padding: 1rem;
+  }
+
+  .about h1 {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .about h2 {
+    font-size: 1.5rem;
+    margin: 1.2rem 0 0.8rem;
+  }
+
+  .about p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .team-images {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .team-member {
+    width: 150px;
+  }
+
+  .image-container {
+    width: 120px;
+    height: 120px;
+  }
 }

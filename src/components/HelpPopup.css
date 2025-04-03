@@ -91,4 +91,55 @@
 
 .dont-remind-btn:hover {
   background-color: #da190b;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .help-popup-content {
+    padding: 1.5rem;
+    width: 95%;
+    margin: 1rem;
+  }
+
+  .help-popup-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .help-step {
+    margin-bottom: 2rem;
+  }
+
+  .help-image {
+    max-width: 100%;
+  }
+
+  .help-step p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .help-buttons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .close-btn {
+    width: 100%;
+    padding: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .help-popup-content {
+    padding: 1rem;
+  }
+
+  .help-popup-content h2 {
+    font-size: 1.3rem;
+  }
+
+  .help-step p {
+    font-size: 0.9rem;
+  }
 } 
