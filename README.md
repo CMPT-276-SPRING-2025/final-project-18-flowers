@@ -5,6 +5,10 @@
 ### Description
 This project aims to help any group decide on something to do when they have a hangout. This project is mainly directed to help target teens who struggle to coordinate plans with friends. 
 
+### Link:
+
+[Squad Up](https://cmpt-276-spring-2025.github.io/final-project-18-flowers/)
+
 ## Local Deployment:
 
 To set up and run this app locally follow these instructions:
@@ -79,7 +83,26 @@ Copy and paste the link generated into your browser to see the project run!
 http://localhost:3000/final-project-18-flowers/
 ```
 
+## Feedback
 
+Please leave feedback for our site using the following form:
+[feedback form](https://forms.office.com/r/TTMsHjuJSt?origin=lprLink)
+
+![form QR code](/misc/FeedbackQRCode.png)
+
+## Tasks For Testers:
+
+### 1. Navigate the Site
+Ensure that you can navigate the site.
+
+### 2. Generate Plan
+Navigate to plan page and add an input to see what you get for your plan.
+
+### 3. Clear Output
+Select the clear button to clear the previous output.
+
+### 4. Try and Break The AI
+Input whatever you want and see how the AI responds try and find a way to get an unexpected or unaccounted for output.
 
 
 
