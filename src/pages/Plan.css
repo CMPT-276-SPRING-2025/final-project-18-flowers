@@ -119,11 +119,11 @@
 
 .help-icon {
   position: fixed;
-  top: 100px; /* Lowered below the header */
+  top: 80px;
   right: 20px;
-  z-index: 9999;
+  z-index: 1000;
   cursor: pointer;
-  background-color: #ff6f61; /* Changed to match the website's accent color */
+  background-color: #ff6f61;
   color: white;
   width: 40px;
   height: 40px;
@@ -137,8 +137,8 @@
 
 .help-icon:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(255, 111, 97, 0.3); /* Changed shadow color to match the icon */
-  background-color: #ff5a4d; /* Darker shade on hover, matching the clear button hover state */
+  box-shadow: 0 4px 8px rgba(255, 111, 97, 0.3);
+  background-color: #ff5a4d;
 }
 
 .help-icon i {
@@ -184,7 +184,7 @@
   }
 
   .help-icon {
-    top: 80px;
+    top: 70px;
     right: 15px;
     width: 35px;
     height: 35px;
@@ -237,7 +237,7 @@
   }
 
   .help-icon {
-    top: 70px;
+    top: 60px;
     right: 10px;
     width: 30px;
     height: 30px;
