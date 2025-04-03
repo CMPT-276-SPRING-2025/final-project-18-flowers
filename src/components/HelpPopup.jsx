@@ -15,7 +15,7 @@ const HelpPopup = ({ isOpen, onClose }) => {
         </div>
 
         <div className="help-step">
-          <img src="/final-project-18-flowers/images/ai-response.png" alt="AI response step" className="help-image" />
+          <img src="/final-project-18-flowers/result.png" alt="AI response step" className="help-image" />
           <p>2. Get personalized suggestions from our AI based on your search</p>
         </div>
 
