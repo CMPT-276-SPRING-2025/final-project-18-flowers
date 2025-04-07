@@ -20,6 +20,7 @@ Before starting first make sure that you have following:
 - Basic knowledge on using your computer's terminal
 - [Node.js](https://nodejs.org/en) (make sure to install a modern version, we suggest 22 or higher)
 - A Google Gemini [API Key](https://aistudio.google.com/app/apikey)
+- A Ticketmaster [API Key](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/)
 - npm (this should come with Node.js)
 - [Git](https://git-scm.com/downloads) and a [GitHub](https://github.com/signup) account
 
@@ -47,17 +48,18 @@ npm install
 ```
 ### Edit environment variable
 
-Navigate inside of the folder to the file called ".env"
+Navigate make sure you are in the root directory of the project and create a file called ".env.local"
 
-Open the file with the text editor of your choice and replace "your_api_key" with the value for your api key you got from the prerequisites section:
+Open the file with the text editor of your choice and add these two lines:
 
-Before:
 ```sh
 VITE_GEMINI_API_KEY=your_gemeni_api_key
+VITE_TICKETMASTER_API_KEY=your_ticketmaster_api_key
 ```
-After:
+Now replace the "your_gemini/ticketmaster_api_key" with the actual value of the keys obtained in the prerequisites section:
 ```sh
 VITE_GEMINI_API_KEY=AIzaSY.....
+VITE_TICKETMASTER_API_KEY=aRhuRC....
 ```
 
 ### Run Locally:
