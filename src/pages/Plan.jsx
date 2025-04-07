@@ -5,31 +5,24 @@ import "./Plan.css";
 
 // Helper function to convert basic markdown to HTML
 const convertMarkdown = (text) => {
-  // Convert bold markers: **text** -> <strong>text</strong>
   let html = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-  
-  // Split text into lines
   const lines = html.split("\n").map((line) => line.trim());
-  
-  // If every line starts with a bullet marker (*), treat it as a list
   if (lines.every((line) => line.startsWith("*"))) {
-    const listItems = lines
-      .map((line) => `<li>${line.substring(1).trim()}</li>`)
-      .join("");
+    const listItems = lines.map((line) => `<li>${line.substring(1).trim()}</li>`).join("");
     html = `<ul>${listItems}</ul>`;
   } else {
-    // Otherwise, replace newlines with <br>
     html = html.replace(/\n/g, "<br>");
   }
-  
   return html;
 };
 
 const Plan = () => {
   const [input, setInput] = useState("");
-  const [location, setLocation] = useState(""); // New location state
+  const [location, setLocation] = useState(""); // Location input
   const [response, setResponse] = useState("");
-  const [events, setEvents] = useState([]); // Ticketmaster events state
+  const [events, setEvents] = useState([]); // Events for suggestions
+  const [topPlacesEvents, setTopPlacesEvents] = useState([]); // Events used for top places computation
+  const [suggestionsGenerated, setSuggestionsGenerated] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
   const handleInputChange = (e) => {
@@ -41,7 +34,7 @@ const Plan = () => {
       const apiKey = import.meta.env.VITE_TICKETMASTER_API_KEY;
       const url = new URL("https://app.ticketmaster.com/discovery/v2/events.json");
       
-      // Append query parameters to filter events by keyword and location
+      // Append query parameters: if query is non-empty, add it; location is required
       if (query) {
         url.searchParams.append("keyword", query);
       }
@@ -60,7 +53,7 @@ const Plan = () => {
         throw new Error(`Ticketmaster API error: ${response.status}`);
       }
       
-      // The events will be in data._embedded.events if available
+      // Return events if available
       const events = data._embedded ? data._embedded.events : [];
       console.log("Fetched Ticketmaster events:", events);
       return events;
@@ -68,6 +61,36 @@ const Plan = () => {
       console.error("Error in fetchTicketmasterEvents:", error);
       return [];
     }
+  };
+
+  // Compute top venues using events fetched based solely on location
+  const computeTopPlaces = () => {
+    const venuesMap = {};
+    topPlacesEvents.forEach((event) => {
+      if (
+        event._embedded &&
+        event._embedded.venues &&
+        event._embedded.venues.length > 0
+      ) {
+        const venueName = event._embedded.venues[0].name;
+        if (venueName) {
+          if (!venuesMap[venueName]) {
+            // Store the first event for that venue and initialize count
+            venuesMap[venueName] = { count: 1, event };
+          } else {
+            venuesMap[venueName].count += 1;
+          }
+        }
+      }
+    });
+    const sortedVenues = Object.entries(venuesMap)
+      .sort(([, a], [, b]) => b.count - a.count)
+      .map(([venueName, info]) => ({
+        venueName,
+        event: info.event,
+        count: info.count,
+      }));
+    return sortedVenues.slice(0, 3);
   };
 
   const handleSubmit = async (e) => {
@@ -83,12 +106,19 @@ const Plan = () => {
       setResponse(aiResponse);
   
       if (location.trim()) {
-        const eventsResult = await fetchTicketmasterEvents(input, location);
-        // Filter for events that have a valid booking URL
-        const bookableEvents = eventsResult.filter(event => event.url);
-        // Limit to at most 5 events
-        setEvents(bookableEvents.slice(0, 5));
+        // Fetch events using both the query and location for suggestions
+        const suggestionEventsResult = await fetchTicketmasterEvents(input, location);
+        const bookableSuggestionEvents = suggestionEventsResult.filter(
+          (event) => event.url
+        );
+        // Limit to at most 5 events for suggestions display
+        setEvents(bookableSuggestionEvents.slice(0, 5));
+  
+        // Fetch events based solely on location for the "Top Places" section
+        const topEventsResult = await fetchTicketmasterEvents("", location);
+        setTopPlacesEvents(topEventsResult);
       }
+      setSuggestionsGenerated(true);
     } catch (error) {
       console.error("Submission error:", error);
       setResponse("Error generating suggestions. Please try again.");
@@ -102,21 +132,8 @@ const Plan = () => {
     setLocation("");
     setResponse("");
     setEvents([]);
-  };
-
-  // Compute top venues from the fetched Ticketmaster events
-  const computeTopPlaces = () => {
-    const venuesCount = {};
-    events.forEach((event) => {
-      if (event.venue && event.venue.name) {
-        const venueName = event.venue.name;
-        venuesCount[venueName] = (venuesCount[venueName] || 0) + 1;
-      }
-    });
-    const sortedVenues = Object.entries(venuesCount)
-      .sort((a, b) => b[1] - a[1])
-      .map(([name]) => name);
-    return sortedVenues.slice(0, 3);
+    setTopPlacesEvents([]);
+    setSuggestionsGenerated(false);
   };
 
   const topPlaces = computeTopPlaces();
@@ -147,22 +164,27 @@ const Plan = () => {
             Generate Suggestions
           </button>
         </form>
-        {/* AI-generated suggestions */}
         {response && (
           <div className="response-box">
             <div dangerouslySetInnerHTML={{ __html: convertMarkdown(response) }} />
           </div>
         )}
-        {/* Ticketmaster events */}
+        {/* Display suggestions (up to 5 events) */}
         {events.length > 0 && (
           <div className="eventbrite-events">
-            <h3>Local Bookable Events in {location} based on your input:</h3>
+            <h3>Local Events in {location} based on your input:</h3>
             {events.map(event => (
               <div key={event.id} className="event-card">
                 <h4>{event.name ? event.name : "Event"}</h4>
-                {event.venue && event.venue.name && <p>📍 {event.venue.name}</p>}
+                {event._embedded &&
+                  event._embedded.venues &&
+                  event._embedded.venues.length > 0 && (
+                    <p>📍 {event._embedded.venues[0].name}</p>
+                )}
                 <p>
-                  {event.dates && event.dates.start && event.dates.start.dateTime 
+                  {event.dates &&
+                  event.dates.start &&
+                  event.dates.start.dateTime 
                     ? new Date(event.dates.start.dateTime).toLocaleDateString()
                     : "Date not available"}
                 </p>
@@ -178,8 +200,7 @@ const Plan = () => {
             ))}
           </div>
         )}
-        {/* Fallback message if no bookable events */}
-        {location.trim() && events.length === 0 && (
+        {location.trim() && events.length === 0 && suggestionsGenerated && (
           <div className="no-events-message">
             No bookable events found for "{input}" in {location} right now.
           </div>
@@ -189,14 +210,44 @@ const Plan = () => {
             Clear
           </button>
         )}
-        {/* Dynamic Top Places to Hangout */}
-        {location.trim() && (
+        {/* Dynamic Top Places to Hangout only after suggestions are generated */}
+        {suggestionsGenerated && (
           <div className="top-places">
             <h2>Top Places to Hangout in {location}</h2>
             <div className="place-cards">
               {topPlaces.length > 0 ? (
-                topPlaces.map(place => (
-                  <div key={place} className="place-card">{place}</div>
+                topPlaces.map(({ venueName, event }) => (
+                  <a
+                    key={venueName}
+                    href={event.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="place-card"
+                    style={{
+                      display: "block",
+                      textDecoration: "none",
+                      color: "inherit",
+                      border: "1px solid #ccc",
+                      borderRadius: "8px",
+                      padding: "10px",
+                      maxWidth: "200px",
+                      textAlign: "center",
+                      margin: "5px",
+                    }}
+                  >
+                    {event.images && event.images.length > 0 ? (
+                      <img
+                        src={event.images[0].url}
+                        alt={venueName}
+                        style={{ width: "100%", height: "auto", maxHeight: "120px", objectFit: "cover" }}
+                      />
+                    ) : (
+                      <div style={{ width: "100%", height: "120px", backgroundColor: "#eee", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        No Image
+                      </div>
+                    )}
+                    <div style={{ marginTop: "8px", fontWeight: "bold" }}>{venueName}</div>
+                  </a>
                 ))
               ) : (
                 <div className="place-card">No top places available</div>
