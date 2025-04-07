@@ -20,7 +20,7 @@ const processResponse = (text) => {
 
 export const generateContent = async (prompt) => {
   // Append instruction to ask for a concise, bullet-point answer.
-  const modifiedPrompt = `${prompt}\n\nPlease provide a concise answer in 2-3 bullet points.`;
+  const modifiedPrompt = `${prompt}\n\nPlease provide 2-3 suggestions in bullet points.`;
   
   const result = await model.generateContent(modifiedPrompt);
   const rawText = result.response.text();

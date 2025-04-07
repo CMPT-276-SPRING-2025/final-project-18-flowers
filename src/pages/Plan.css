@@ -247,3 +247,57 @@
     font-size: 18px;
   }
 }
+/* Plan.css */
+.eventbrite-events {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.eventbrite-events h3 {
+  color: #2d3436;
+  margin-bottom: 1rem;
+}
+
+.event-card {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.event-card h4 {
+  color: #0984e3;
+  margin: 0 0 0.5rem 0;
+}
+
+.event-link {
+  display: inline-block;
+  background: #0984e3;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+
+.event-link:hover {
+  background: #0873c4;
+}
+
+.submit-btn {
+  background: #00b894;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background: #00a383;
+}
