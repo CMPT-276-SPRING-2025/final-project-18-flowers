@@ -16,6 +16,67 @@ const convertMarkdown = (text) => {
   return html;
 };
 
+export const fetchTicketmasterEvents = async (query, location) => {
+  try {
+    const apiKey = import.meta.env.VITE_TICKETMASTER_API_KEY;
+    const url = new URL("https://app.ticketmaster.com/discovery/v2/events.json");
+    
+    if (query) {
+      url.searchParams.append("keyword", query);
+    }
+    if (location) {
+      url.searchParams.append("city", location);
+    }
+    url.searchParams.append("apikey", apiKey);
+
+    console.log("Fetching Ticketmaster events from URL:", url.toString());
+    
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (!response.ok) {
+      console.error("Error response from Ticketmaster API:", data);
+      throw new Error(`Ticketmaster API error: ${response.status}`);
+    }
+    
+    const events = data._embedded ? data._embedded.events : [];
+    console.log("Fetched Ticketmaster events:", events);
+    return events;
+  } catch (error) {
+    console.error("Error in fetchTicketmasterEvents:", error);
+    return [];
+  }
+};
+
+// Compute top venues using events fetched solely based on location
+export const computeTopPlaces = (topPlacesEvents) => {
+  const venuesMap = {};
+  topPlacesEvents.forEach((event) => {
+    if (
+      event._embedded &&
+      event._embedded.venues &&
+      event._embedded.venues.length > 0
+    ) {
+      const venueName = event._embedded.venues[0].name;
+      if (venueName) {
+        if (!venuesMap[venueName]) {
+          venuesMap[venueName] = { count: 1, event };
+        } else {
+          venuesMap[venueName].count += 1;
+        }
+      }
+    }
+  });
+  const sortedVenues = Object.entries(venuesMap)
+    .sort(([, a], [, b]) => b.count - a.count)
+    .map(([venueName, info]) => ({
+      venueName,
+      event: info.event,
+      count: info.count,
+    }));
+  return sortedVenues.slice(0, 3);
+};
+
 const Plan = () => {
   const [input, setInput] = useState("");
   const [location, setLocation] = useState(""); // Location input
@@ -30,7 +91,7 @@ const Plan = () => {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
-
+/*
   const fetchTicketmasterEvents = async (query, location) => {
     try {
       const apiKey = import.meta.env.VITE_TICKETMASTER_API_KEY;
@@ -63,6 +124,7 @@ const Plan = () => {
     }
   };
 
+
   // Compute top venues using events fetched solely based on location
   const computeTopPlaces = () => {
     const venuesMap = {};
@@ -91,7 +153,7 @@ const Plan = () => {
       }));
     return sortedVenues.slice(0, 3);
   };
-
+*/
   const handleSubmit = async (e) => {
     e.preventDefault();
     const input = e.target.elements.input.value;
@@ -139,7 +201,7 @@ const Plan = () => {
     setInputValue("");
   };
 
-  const topPlaces = computeTopPlaces();
+  const topPlaces = computeTopPlaces(topPlacesEvents);
 
   return (
     <>

@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 // Helper: Extract bullet points or return a concise snippet if bullets aren't detected.
-const processResponse = (text) => {
+export const processResponse = (text) => {
   // Split the raw text into lines and trim whitespace.
   const lines = text.split("\n").map(line => line.trim()).filter(line => line !== "");
   // Filter lines that appear to be bullet points (start with "*" or "-").
