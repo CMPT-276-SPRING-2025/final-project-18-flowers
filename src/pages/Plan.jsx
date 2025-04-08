@@ -3,6 +3,7 @@ import { generateContent } from "../components/Model";
 import HelpPopup from "../components/HelpPopup";
 import "./Plan.css";
 
+// Helper function to convert basic markdown to HTML
 const convertMarkdown = (text) => {
   let html = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   const lines = html.split("\n").map((line) => line.trim());
@@ -17,14 +18,14 @@ const convertMarkdown = (text) => {
 
 const Plan = () => {
   const [input, setInput] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(""); // Location input
   const [response, setResponse] = useState("");
   const [events, setEvents] = useState([]); // Events for suggestions
   const [topPlacesEvents, setTopPlacesEvents] = useState([]); // For top places computation
   const [suggestionsGenerated, setSuggestionsGenerated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(""); // For the text field value
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -107,14 +108,14 @@ const Plan = () => {
       setResponse(aiResponse);
   
       if (location.trim()) {
-        // Fetch events with both query and location for suggestions
+        // Fetch events using both the query and location for suggestions
         const suggestionEventsResult = await fetchTicketmasterEvents(input, location);
         const bookableSuggestionEvents = suggestionEventsResult.filter(
           (event) => event.url
         );
         setEvents(bookableSuggestionEvents.slice(0, 5));
   
-        // Fetch events solely based on location for "Top Places" section
+        // Fetch events based solely on location for the "Top Places" section
         const topEventsResult = await fetchTicketmasterEvents("", location);
         setTopPlacesEvents(topEventsResult);
       }
@@ -167,7 +168,6 @@ const Plan = () => {
             Generate Suggestions
           </button>
         </form>
-        {/* Loader - show only when isLoading is true */}
         {isLoading && (
           <div className="loader">
             <span></span>
@@ -180,6 +180,7 @@ const Plan = () => {
             <div dangerouslySetInnerHTML={{ __html: convertMarkdown(response) }} />
           </div>
         )}
+        {/* Display suggestions (up to 5 events) */}
         {events.length > 0 && (
           <div className="eventbrite-events">
             <h3>Local Events in {location} based on your input:</h3>
@@ -220,35 +221,42 @@ const Plan = () => {
             Clear
           </button>
         )}
+        {/* Dynamic Top Places to Hangout only if location provided and suggestions generated */}
         {suggestionsGenerated && (
           <div className="top-places">
-            <h2>Top Places to Hangout in {location}</h2>
-            <div className="place-cards">
-              {topPlaces.length > 0 ? (
-                topPlaces.map(({ venueName, event }) => (
-                  <a
-                    key={venueName}
-                    href={event.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="place-card"
-                  >
-                    {event.images && event.images.length > 0 ? (
-                      <img
-                        src={event.images[0].url}
-                        alt={venueName}
-                        className="venue-image"
-                      />
-                    ) : (
-                      <div className="venue-placeholder">No Image</div>
-                    )}
-                    <div className="venue-name">{venueName}</div>
-                  </a>
-                ))
-              ) : (
-                <div className="place-card">No top places available</div>
-              )}
-            </div>
+            <h2>
+              {location.trim() 
+                ? `Top Places to Hangout in ${location}`
+                : "Enter your location to see our selection of the top places to hangout"}
+            </h2>
+            {location.trim() && (
+              <div className="place-cards">
+                {topPlaces.length > 0 ? (
+                  topPlaces.map(({ venueName, event }) => (
+                    <a
+                      key={venueName}
+                      href={event.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="place-card"
+                    >
+                      {event.images && event.images.length > 0 ? (
+                        <img
+                          src={event.images[0].url}
+                          alt={venueName}
+                          className="venue-image"
+                        />
+                      ) : (
+                        <div className="venue-placeholder">No Image</div>
+                      )}
+                      <div className="venue-name">{venueName}</div>
+                    </a>
+                  ))
+                ) : (
+                  <div className="place-card">No top places available</div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
