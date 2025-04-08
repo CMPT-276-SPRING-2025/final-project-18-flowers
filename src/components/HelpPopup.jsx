@@ -11,7 +11,7 @@ const HelpPopup = ({ isOpen, onClose }) => {
         
         <div className="help-step">
           <img src="/final-project-18-flowers/search.png" alt="Search interface" className="help-image" />
-          <p>1. Use the search bar to find activities or events you're interested in</p>
+          <p>1. Use the search bar to find activities or events in the location you're interested in</p>
         </div>
 
         <div className="help-step">
@@ -20,7 +20,7 @@ const HelpPopup = ({ isOpen, onClose }) => {
         </div>
 
         <div className="help-step">
-          <img src="/final-project-18-flowers/images/categories.png" alt="Categories step" className="help-image" />
+          <img src="/final-project-18-flowers/ticketmaster.png" alt="Categories step" className="help-image" />
           <p>3. Browse through different categories like events, spots, cafes, and parks</p>
         </div>
 
