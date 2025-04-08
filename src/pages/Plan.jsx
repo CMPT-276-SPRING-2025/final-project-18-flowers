@@ -24,6 +24,7 @@ const Plan = () => {
   const [topPlacesEvents, setTopPlacesEvents] = useState([]); // Events used for top places computation
   const [suggestionsGenerated, setSuggestionsGenerated] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [inputValue, setInputValue] = useState(""); // Add state for input value
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -95,6 +96,8 @@ const Plan = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const input = e.target.elements.input.value;
+    setInputValue(input); // Store the input value
     try {
       if (!input.trim()) {
         alert("Please enter an activity or interest");
@@ -148,10 +151,11 @@ const Plan = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
+            name="input"
             placeholder="Describe an activity or interest"
             className="search-bar"
-            value={input}
-            onChange={handleInputChange}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
           />
           <input
             type="text"
