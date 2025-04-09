@@ -367,6 +367,27 @@
   background: #0873c4;
 }
 
+.share-btn {
+  display: inline-block;
+  background: #0984e3;
+  color: white !important;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 1rem;
+  margin-left: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.share-btn:hover {
+  background: #0873c4;
+}
+
 .no-events-message {
   text-align: center;
   padding: 2rem;
@@ -400,7 +421,7 @@
     font-size: 1rem;
   }
 
-  .event-link {
+  .event-link, .share-btn {
     padding: 0.7rem 1.2rem;
     font-size: 0.9rem;
   }
@@ -427,7 +448,7 @@
     font-size: 0.9rem;
   }
 
-  .event-link {
+  .event-link, .share-btn {
     padding: 0.6rem 1rem;
     font-size: 0.8rem;
   }
