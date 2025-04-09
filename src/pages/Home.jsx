@@ -1,6 +1,9 @@
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
+// Home component – the landing page for the application.
+//  It introduces the app and provides a button to navigate to the planning section.
+
 const Home = () => {
   const navigate = useNavigate();
 

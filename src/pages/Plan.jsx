@@ -3,7 +3,14 @@ import { generateContent } from "../components/Model";
 import HelpPopup from "../components/HelpPopup";
 import "./Plan.css";
 
-// Helper function to convert basic markdown to HTML
+/**
+ * Converts basic markdown in text to HTML.
+ * Bold text (marked with **) is converted to <strong> text </strong>.
+ * If every line is a bullet (starting with "*"), the text is rendered as an unordered list.
+ *
+ * @param {string} text - The input text in basic markdown.
+ * @returns {string} - The converted HTML string.
+ */
 const convertMarkdown = (text) => {
   let html = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   const lines = html.split("\n").map((line) => line.trim());
@@ -16,6 +23,14 @@ const convertMarkdown = (text) => {
   return html;
 };
 
+/**
+ * Fetches Ticketmaster events from the Ticketmaster Discovery API.
+ * Filters events based on an optional query (activity) and location.
+ *
+ * @param {string} query - The activity query (keyword).
+ * @param {string} location - The city or zip code.
+ * @returns {Promise<Array>} - A promise that resolves to an array of event objects.
+ */
 export const fetchTicketmasterEvents = async (query, location) => {
   try {
     const apiKey = import.meta.env.VITE_TICKETMASTER_API_KEY;
@@ -48,6 +63,13 @@ export const fetchTicketmasterEvents = async (query, location) => {
   }
 };
 
+/**
+ * Computes the top venues from an array of events.
+ * Groups events by the first venue in each event and returns the top three venues.
+ *
+ * @param {Array} topPlacesEvents - An array of Ticketmaster events fetched solely by location.
+ * @returns {Array} - The top three venues with their associated event and count.
+ */
 export const computeTopPlaces = (topPlacesEvents) => {
   const venuesMap = {};
   topPlacesEvents.forEach((event) => {
@@ -77,23 +99,35 @@ export const computeTopPlaces = (topPlacesEvents) => {
 };
 
 const Plan = () => {
-  const [input, setInput] = useState("");
-  const [location, setLocation] = useState(""); // Location input
-  const [response, setResponse] = useState("");
-  const [events, setEvents] = useState([]); // Events for suggestions
-  const [topPlacesEvents, setTopPlacesEvents] = useState([]); // For top places computation
-  const [suggestionsGenerated, setSuggestionsGenerated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // State variables for input and data
+  const [input, setInput] = useState(""); // Internal input for processing (cleared after submission)
+  const [submittedQuery, setSubmittedQuery] = useState(""); // Saves the submitted activity query for fallback messages
+  const [location, setLocation] = useState(""); // Location input field
+  const [response, setResponse] = useState(""); // AI-generated suggestions
+  const [events, setEvents] = useState([]); // Suggestion events from Ticketmaster
+  const [topPlacesEvents, setTopPlacesEvents] = useState([]); // Events fetched solely by location for computing top places
+  const [suggestionsGenerated, setSuggestionsGenerated] = useState(false); // Flag indicating that suggestions have been generated
+  const [isLoading, setIsLoading] = useState(false); // Loading state flag
   const [showHelp, setShowHelp] = useState(false);
-  const [inputValue, setInputValue] = useState(""); // For the text field value
-  const [copiedEventId, setCopiedEventId] = useState(null);
+  const [inputValue, setInputValue] = useState(""); // Visible input field value
+  const [copiedEventId, setCopiedEventId] = useState(null); // Tracks which event was shared
 
+  /**
+   * Handles changes to the input field.
+   */
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  /**
+   * Shares the event URL using the Clipboard API and shows a copy confirmation.
+   *
+   * @param {string} url - The event URL to copy.
+   * @param {string} eventId - The event ID (used to display confirmation for a specific event).
+   */
   const shareEvent = (url, eventId) => {
-    navigator.clipboard.writeText(url)
+    navigator.clipboard
+      .writeText(url)
       .then(() => {
         setCopiedEventId(eventId);
         setTimeout(() => {
@@ -105,11 +139,19 @@ const Plan = () => {
       });
   };
 
+  /**
+   * Handles form submission.
+   * Generates suggestions via the AI API and fetches Ticketmaster events based on
+   * the activity query and location.
+   *
+   * @param {Event} e - The form submission event.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Capture the input from the form named "input"
+    // Capture the activity query from the form field
     const input = e.target.elements.input.value;
     setInputValue(input);
+    setSubmittedQuery(input);
     setIsLoading(true);
     try {
       if (!input.trim()) {
@@ -117,19 +159,21 @@ const Plan = () => {
         return;
       }
   
+      // Generate AI suggestions
       const prompt = `Give suggestions for a hangout based on: "${input}"`;
       const aiResponse = await generateContent(prompt);
+      console.log("AI response:", aiResponse);
       setResponse(aiResponse);
   
       if (location.trim()) {
-        // Fetch events using both the query and location for suggestions
+        // Fetch events using both query and location for suggestions
         const suggestionEventsResult = await fetchTicketmasterEvents(input, location);
         const bookableSuggestionEvents = suggestionEventsResult.filter(
           (event) => event.url
         );
         setEvents(bookableSuggestionEvents.slice(0, 5));
   
-        // Fetch events based solely on location for the "Top Places" section
+        // Fetch events based solely on location for the top places section
         const topEventsResult = await fetchTicketmasterEvents("", location);
         setTopPlacesEvents(topEventsResult);
       }
@@ -139,10 +183,13 @@ const Plan = () => {
       setResponse("Error generating suggestions. Please try again.");
     } finally {
       setIsLoading(false);
-      setInput(""); // Clear main input field after submission
+      setInput(""); // Clear internal input state after submission
     }
   };
 
+  /**
+   * Clears all state values to reset the form.
+   */
   const handleClear = () => {
     setInput("");
     setLocation("");
@@ -151,8 +198,10 @@ const Plan = () => {
     setTopPlacesEvents([]);
     setSuggestionsGenerated(false);
     setInputValue("");
+    setSubmittedQuery("");
   };
 
+  // Compute top venues based solely on the events fetched by location.
   const topPlaces = computeTopPlaces(topPlacesEvents);
 
   return (
@@ -194,36 +243,41 @@ const Plan = () => {
             <div dangerouslySetInnerHTML={{ __html: convertMarkdown(response) }} />
           </div>
         )}
-        {/* Display suggestions (up to 5 events) */}
+        {/* Display suggestion events if available */}
         {events.length > 0 && (
           <div className="eventbrite-events">
             <h3>Local Events in {location} based on your input:</h3>
-            {events.map(event => (
+            {events.map((event) => (
               <div key={event.id} className="event-card">
                 <h4>{event.name ? event.name : "Event"}</h4>
                 {event._embedded &&
                   event._embedded.venues &&
                   event._embedded.venues.length > 0 && (
                     <p>📍 {event._embedded.venues[0].name}</p>
-                )}
+                  )}
                 <p>
                   {event.dates &&
                   event.dates.start &&
-                  event.dates.start.dateTime 
+                  event.dates.start.dateTime
                     ? new Date(event.dates.start.dateTime).toLocaleDateString()
                     : "Date not available"}
                 </p>
-                <a 
-                  href={event.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="event-link"
-                >
-                  View Event
-                </a>
-                <button className="share-btn" onClick={() => shareEvent(event.url, event.id)}>
-                  Share Event
-                </button>
+                <div className="event-actions">
+                  <a
+                    href={event.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="event-link"
+                  >
+                    View Event
+                  </a>
+                  <button
+                    className="share-btn"
+                    onClick={() => shareEvent(event.url, event.id)}
+                  >
+                    Share Event
+                  </button>
+                </div>
                 {copiedEventId === event.id && (
                   <div className="copy-message">Copied event link to clipboard</div>
                 )}
@@ -233,10 +287,11 @@ const Plan = () => {
         )}
         {location.trim() && events.length === 0 && suggestionsGenerated && !isLoading && (
           <div className="no-events-message">
-            No bookable events found for "{input}" in {location} right now.
+            No bookable events found for "{submittedQuery}" in {location} right now.
           </div>
         )}
-        {(input.trim() !== "" || response.trim() !== "") && (
+        {/* Display the Clear button only after suggestions have been generated */}
+        {suggestionsGenerated && (
           <button onClick={handleClear} className="clear-btn">
             Clear
           </button>
@@ -245,7 +300,7 @@ const Plan = () => {
         {suggestionsGenerated && (
           <div className="top-places">
             <h2>
-              {location.trim() 
+              {location.trim()
                 ? `Top Places to Hangout in ${location}`
                 : "Enter your location to see our selection of top places to hangout"}
             </h2>
@@ -280,10 +335,7 @@ const Plan = () => {
           </div>
         )}
       </div>
-      <HelpPopup 
-        isOpen={showHelp}
-        onClose={() => setShowHelp(false)}
-      />
+      <HelpPopup isOpen={showHelp} onClose={() => setShowHelp(false)} />
     </>
   );
 };
