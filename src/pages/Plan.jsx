@@ -48,7 +48,6 @@ export const fetchTicketmasterEvents = async (query, location) => {
   }
 };
 
-// Compute top venues using events fetched solely based on location
 export const computeTopPlaces = (topPlacesEvents) => {
   const venuesMap = {};
   topPlacesEvents.forEach((event) => {
@@ -87,77 +86,30 @@ const Plan = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [inputValue, setInputValue] = useState(""); // For the text field value
+  const [copiedEventId, setCopiedEventId] = useState(null);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
-/*
-  const fetchTicketmasterEvents = async (query, location) => {
-    try {
-      const apiKey = import.meta.env.VITE_TICKETMASTER_API_KEY;
-      const url = new URL("https://app.ticketmaster.com/discovery/v2/events.json");
-      
-      if (query) {
-        url.searchParams.append("keyword", query);
-      }
-      if (location) {
-        url.searchParams.append("city", location);
-      }
-      url.searchParams.append("apikey", apiKey);
-  
-      console.log("Fetching Ticketmaster events from URL:", url.toString());
-      
-      const response = await fetch(url);
-      const data = await response.json();
-      
-      if (!response.ok) {
-        console.error("Error response from Ticketmaster API:", data);
-        throw new Error(`Ticketmaster API error: ${response.status}`);
-      }
-      
-      const events = data._embedded ? data._embedded.events : [];
-      console.log("Fetched Ticketmaster events:", events);
-      return events;
-    } catch (error) {
-      console.error("Error in fetchTicketmasterEvents:", error);
-      return [];
-    }
+
+  const shareEvent = (url, eventId) => {
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        setCopiedEventId(eventId);
+        setTimeout(() => {
+          setCopiedEventId(null);
+        }, 3000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy event URL:", err);
+      });
   };
 
-
-  // Compute top venues using events fetched solely based on location
-  const computeTopPlaces = () => {
-    const venuesMap = {};
-    topPlacesEvents.forEach((event) => {
-      if (
-        event._embedded &&
-        event._embedded.venues &&
-        event._embedded.venues.length > 0
-      ) {
-        const venueName = event._embedded.venues[0].name;
-        if (venueName) {
-          if (!venuesMap[venueName]) {
-            venuesMap[venueName] = { count: 1, event };
-          } else {
-            venuesMap[venueName].count += 1;
-          }
-        }
-      }
-    });
-    const sortedVenues = Object.entries(venuesMap)
-      .sort(([, a], [, b]) => b.count - a.count)
-      .map(([venueName, info]) => ({
-        venueName,
-        event: info.event,
-        count: info.count,
-      }));
-    return sortedVenues.slice(0, 3);
-  };
-*/
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Capture the input from the form named "input"
     const input = e.target.elements.input.value;
-    setInputValue(input); // Store the input value
+    setInputValue(input);
     setIsLoading(true);
     try {
       if (!input.trim()) {
@@ -187,7 +139,7 @@ const Plan = () => {
       setResponse("Error generating suggestions. Please try again.");
     } finally {
       setIsLoading(false);
-      setInput(""); // Clear main input
+      setInput(""); // Clear main input field after submission
     }
   };
 
@@ -269,6 +221,12 @@ const Plan = () => {
                 >
                   View Event
                 </a>
+                <button className="share-btn" onClick={() => shareEvent(event.url, event.id)}>
+                  Share Event
+                </button>
+                {copiedEventId === event.id && (
+                  <div className="copy-message">Copied event link to clipboard</div>
+                )}
               </div>
             ))}
           </div>
@@ -283,13 +241,13 @@ const Plan = () => {
             Clear
           </button>
         )}
-        {/* Dynamic Top Places to Hangout only if location provided and suggestions generated */}
+        {/* Dynamic Top Places to Hangout shown only if suggestions generated */}
         {suggestionsGenerated && (
           <div className="top-places">
             <h2>
               {location.trim() 
                 ? `Top Places to Hangout in ${location}`
-                : "Enter your location to see our selection of the top places to hangout"}
+                : "Enter your location to see our selection of top places to hangout"}
             </h2>
             {location.trim() && (
               <div className="place-cards">
